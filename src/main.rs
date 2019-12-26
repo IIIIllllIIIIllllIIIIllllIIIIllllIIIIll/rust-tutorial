@@ -1,4 +1,8 @@
-fn sum(slice: &[i32]) -> i32 {
+fn main() {
+    println!("Hello World");
+}
+
+pub fn sum(slice: &[i32]) -> i32 {
     let mut sum = 0;
     for e in slice { sum += e };
     sum
@@ -10,7 +14,7 @@ fn test_sum_small() {
     assert_eq!(sum(&array), 15);
 }
 
-fn dedup(vs: &Vec<i32>) -> Vec<i32> {
+pub fn dedup(vs: &Vec<i32>) -> Vec<i32> {
     let mut ret: Vec<i32> = Vec::new();
     for e in vs {
         if ret.contains(e) {
@@ -27,7 +31,7 @@ fn test_dedup_small() {
     assert_eq!(dedup(&vs), vec![1,2,3,4]);
 }
 
-fn filter(vs: &Vec<i32>, pred: &dyn Fn(i32) -> bool) -> Vec<i32> {
+pub fn filter(vs: &Vec<i32>, pred: &dyn Fn(i32) -> bool) -> Vec<i32> {
     let mut ret: Vec<i32> = Vec::new();
     for e in vs {
         if pred(*e) {
@@ -37,6 +41,7 @@ fn filter(vs: &Vec<i32>, pred: &dyn Fn(i32) -> bool) -> Vec<i32> {
     ret
 }
 
+#[cfg(test)]
 fn even_predicate(x: i32) -> bool {
     (x % 2) == 0
 }
@@ -47,13 +52,13 @@ fn test_filter_small() {
     assert_eq!(filter(&vs, &even_predicate), vec![2,4]);
 }
 
-type Matrix = Vec<Vec<f32>>;
+pub type Matrix = Vec<Vec<f32>>;
 
 fn dim(mat: &Matrix) -> (usize, usize) {
     (mat.len(), mat[0].len())
 }
 
-fn mat_mult(mat1: &Matrix, mat2: &Matrix) -> Matrix {
+pub fn mat_mult(mat1: &Matrix, mat2: &Matrix) -> Matrix {
     let mut ret = Matrix::new();
     let (m1, n1) = dim(mat1);
     let (m2, n2) = dim(mat2);
@@ -111,7 +116,7 @@ fn mark_multiples(arr: &mut Vec<u32>, p: u32) {
     }
 }
 
-fn sieve(n: u32) -> Vec<u32> {
+pub fn sieve(n: u32) -> Vec<u32> {
     let mut deleted = vec![0 as u32;n as usize];
     let mut ret = vec![];
     for p in 2..n {
@@ -131,15 +136,15 @@ fn test_sieve_basic() {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-enum Peg {
+pub enum Peg {
     A,
     B,
     C,
 }
 
-type Move = (Peg, Peg);
+pub type Move = (Peg, Peg);
 
-fn hanoi(num_discs: u32, src: Peg, aux: Peg, dst: Peg) -> Vec<Move> {
+pub fn hanoi(num_discs: u32, src: Peg, aux: Peg, dst: Peg) -> Vec<Move> {
     if num_discs == 0 {
         return vec![];
     }
